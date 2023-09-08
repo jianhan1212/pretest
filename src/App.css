@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,59 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.App {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
 }
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ageGroupPriceList {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  justify-content: space-around;
+}
+
+.title {
+  margin-bottom: 10px;
+  color: grey;
+}
+
+.inputContainer {
+  display: flex;
+  border: none;
+  background-color: #dddddd;
+  border-radius: 5px;
+}
+
+.exchange {
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  padding: 2px 5px;
+}
+
+.message {
+  display: flex;
+  justify-content: end;
+}
+
+.textfield {
+  display: flex;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+
+.spacing {
+  display: flex;
+  padding: 5px;
+  align-items: center;
+}
+
