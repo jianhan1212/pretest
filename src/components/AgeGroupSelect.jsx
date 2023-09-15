@@ -1,38 +1,62 @@
-import React, { useState } from 'react'
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { age } from "../age"
 import { FormControl, FormHelperText } from '@mui/material';
+import { useEffect, useState } from 'react';
 
-const AgeGroupSelect = (props) => {
-    const { ageError, selectStartAge, selectEndAge, setSelectStartAge, setSelecEndtAge } = props
+const AgeGroupSelect = ({ onSelectChange,initialAgeRange, ageError }) => {
+    // const { ageError, selectStartAge, selectEndAge, setSelectStartAge, setSelecEndtAge } = props
+    const [selectStartAge, setSelectStartAge] = useState(initialAgeRange[0]);
+    const [selectEndAge, setSelectEndAge] = useState(initialAgeRange[1]);
+    // const [ageError, setAgeError] = useState(false);
 
     const handleStartAgeChange = (e) => {
         const newStartAge = parseInt(e.target.value, 10);
         setSelectStartAge(newStartAge);
-        setSelecEndtAge(Math.max(newStartAge, selectEndAge));
-      };
-    
-      const handleEndAgeChange = (e) => {
+        // setSelectEndAge(Math.max(newStartAge, selectEndAge));
+        onSelectChange([newStartAge, selectEndAge]);
+        
+    };
+
+    const handleEndAgeChange = (e) => {
         const newEndAge = parseInt(e.target.value, 10);
-        setSelecEndtAge(newEndAge);
-        setSelectStartAge(Math.min(newEndAge, selectStartAge));
-      };
-    
+        setSelectEndAge(newEndAge);
+        // setSelectStartAge(Math.min(newEndAge, selectStartAge));
+        onSelectChange([selectStartAge, newEndAge]);
+    };
+
+    // useEffect(()=>{
+
+    //     onSelectChange([selectStartAge, selectEndAge])
+
+    // },[selectStartAge, selectEndAge])
+//     useEffect(() => {
+//     // 检查逻辑，将 selectedAgeRanges 与当前选择的范围进行比较
+//     const isOverlap = selectedAgeRanges.some(([start, end]) => {
+//       return (start >= selectStartAge && start <= selectEndAge) || (end >= selectStartAge && end <= selectEndAge);
+//     });
+
+//     // 更新错误状态
+//     setAgeError(isOverlap);
+
+//     // 如果没有重叠，将当前范围添加到 selectedAgeRanges 中
+//     if (!isOverlap) {
+//       onSelectChange([selectStartAge, selectEndAge]);
+//     }
+//   }, [selectStartAge, selectEndAge, selectedAgeRanges, onSelectChange]);
+
     return (
         <div className='ageContainer'>
             <div className='title'>年齡</div>
-            
+
             <FormControl error={ageError}>
                 <div className='textfield'>
                     <TextField
                         error={ageError}
                         sx={{ minWidth: 120 }}
                         select
-                        defaultValue={selectStartAge}
-                        // value={selectAge}
+                        value={selectStartAge}
                         onChange={handleStartAgeChange}
-                        displayEmpty
                         variant="outlined"
 
                     >
@@ -45,10 +69,8 @@ const AgeGroupSelect = (props) => {
                         error={ageError}
                         sx={{ minWidth: 120 }}
                         select
-                        defaultValue={selectEndAge}
-                        // value={selectAge}
+                        value={selectEndAge}
                         onChange={handleEndAgeChange}
-                        displayEmpty
                         variant="outlined"
                     >
                         {age.map((n) => (
@@ -59,14 +81,10 @@ const AgeGroupSelect = (props) => {
                     </TextField>
                 </div>
                 {
-                    ageError && <FormHelperText variant="standard" sx={{backgroundColor: "pink", m:0}}>年齡區間不可重疊</FormHelperText>
+                    ageError && <FormHelperText variant="standard" sx={{ backgroundColor: "pink", m: 0 }}>年齡區間不可重疊</FormHelperText>
                 }
 
             </FormControl>
-            <div></div>
-
-
-            {/* </FormControl> */}
 
         </div>
     )

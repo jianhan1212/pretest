@@ -1,4 +1,5 @@
 import { FormHelperText, TextField } from '@mui/material'
+import { useEffect, useState } from 'react'
 
 const addComma = (number) => {
     const stringNumber = number.toString()
@@ -18,15 +19,24 @@ const addComma = (number) => {
     }
 }
 
-const PriceInput = (props) => {
-    const { price, setPrice, inputError } = props
+const PriceInput = ({initialPrice, onPriceChange}) => {
+    const [inputError, setInputError] = useState(false)
+    const [price, setPrice] = useState(initialPrice)
 
     const handleInputChange = (e) => {
         const value = e.target.value.replace(/,/g, "")
         const addCommaValue = addComma(value)
         setPrice(addCommaValue)
-        console.log(price)
+        onPriceChange(value)
     }
+
+    useEffect(()=>{
+        if(price==="") {
+            setInputError(true)
+        } else {
+            setInputError(false)
+        }
+    }, [price])
 
     return (
         <div className='priceInputContainer'>
